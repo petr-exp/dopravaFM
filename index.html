@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Anketa</title>
+</head>
+<body>
+  <h2>Souhlasíte?</h2>
+  <button onclick="sendVote('Ano')">Ano</button>
+  <button onclick="sendVote('Ne')">Ne</button>
+  <p id="msg"></p>
+
+  <script>
+    function sendVote(answer) {
+      fetch("https://script.google.com/macros/s/AKfycbxcBgdqJnscUjQW_Tbo1BIQ-qXiV5rcREYH8NHjXE1_KVBA0Lvs-YGFDIx_AG5KsDiq/exec", {
+        method: "POST",
+        body: JSON.stringify({ ans: answer }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(response => response.text())
+      .then(text => {
+        document.getElementById("msg").innerText = "Děkujeme za odpověď!";
+      })
+      .catch(err => {
+        document.getElementById("msg").innerText = "Chyba při odesílání.";
+      });
+    }
+  </script>
+</body>
+</html>
